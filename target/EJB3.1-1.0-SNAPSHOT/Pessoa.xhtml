@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Cadastro de Pessoas</title>
+    </h:head>
+    <h:body>
+        <h:form id="dadosPessoa">
+            <fieldset style="width: 350px">
+                <legend>Novo cliente</legend>
+                <h:commandButton value="Novo" action="#{pessoaMB.novo(pessoa)}" />
+            </fieldset>
+            <fieldset style="width: 350px">
+                <legend>Dados do cliente</legend>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Nome" />
+                    <h:inputText value="#{pessoaMB.pessoa.nome}" />
+                    <h:commandButton value="Gravar" action="#{pessoaMB.gravar(pessoa)}" />
+                    <h:commandButton value="Remover" action="#{pessoaMB.remover(pessoa)}" rendered="#{pessoaMB.pessoa.id > 0}" />
+                </h:panelGrid>
+            </fieldset>
+        </h:form>
+
+        <h:form>
+            <fieldset style="width: 350px">
+                <legend>Clientes Cadastrados</legend>
+                <h:dataTable value="#{pessoaMB.pessoas}" var="pessoa" border="2">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="ID" /></f:facet>
+                        <h:outputText value="#{pessoa.id}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="NOME" /></f:facet>
+                        <h:outputText value="#{pessoa.nome}" />
+                    </h:column>
+                    <h:column>
+                        <h:commandButton value="Selecionar" actionListener="#{pessoaMB.selecionar}">
+                            <f:attribute name="id" value="#{pessoa.id}" />
+                            <f:ajax render=":dadosPessoa" execute="@this" />
+                        </h:commandButton>
+                    </h:column>
+                </h:dataTable>
+            </fieldset>
+        </h:form>
+        </h:body>
+</html>
